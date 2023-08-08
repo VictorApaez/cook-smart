@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import CategoriesScreen from './CategoriesScreen';
+import CategoriesScreen from './components/CategoriesScreen';
 
 const App: React.FC = () => {
   return (
