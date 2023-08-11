@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {recipes} from './CategoriesData';
 
 type CarouselItemProps = {
@@ -19,7 +19,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({item}) => {
     const recipesByType = recipes.filter(recipe =>
       recipe.tags.includes(categoryType),
     );
-    navigation.navigate('Recipe', {
+    navigation.navigate('Recipes', {
       recipes: recipesByType,
       categoryType: categoryType,
     });
