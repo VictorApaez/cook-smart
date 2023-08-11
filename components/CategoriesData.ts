@@ -1,78 +1,128 @@
-export type SubCategory = {
-  subCategory: string;
-  image: any; // Change this to the appropriate image type if known
+export type Recipe = {
+  id: number;
+  name: string;
+  image: any;
+  ingredients: string[];
+  instructions: string;
+  tags: string[];
 };
 
-export type Category = {
-  title: string;
-  data: SubCategory[];
+export type SubCategory = {
+  name: string;
+  image: any;
 };
+
+export type CategoryGroup = {
+  [key: string]: SubCategory[];
+};
+
+export type CategoriesData = {
+  recipes: Recipe[];
+  categories: CategoryGroup;
+};
+
+export const recipes = [
+  {
+    id: 1,
+    name: 'Spaghetti Carbonara',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Eggs', 'Pasta', 'Bacon'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dinner', 'Easy', 'Pork'],
+  },
+  {
+    id: 2,
+    name: 'Sushi Rolls',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Rice', 'Fish', 'Seaweed'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Japanese', 'Lunch', 'Medium', 'Fish'],
+  },
+  {
+    id: 1,
+    name: 'Spaghetti Carbonara',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Eggs', 'Pasta', 'Bacon'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dinner', 'Easy', 'Pork'],
+  },
+  {
+    id: 2,
+    name: 'Lasagna',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Pasta', 'Cheese', 'Ground Beef', 'Tomato Sauce'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dinner', 'Medium', 'Beef'],
+  },
+  {
+    id: 3,
+    name: 'Risotto',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Rice', 'Chicken Stock', 'Parmesan', 'White Wine'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dinner', 'Medium', 'Vegetarian'],
+  },
+  {
+    id: 4,
+    name: 'Tiramisu',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Ladyfingers', 'Coffee', 'Mascarpone', 'Cocoa Powder'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dessert', 'Medium'],
+  },
+  {
+    id: 5,
+    name: 'Margherita Pizza',
+    image: require('../images/pank.jpeg'),
+    ingredients: ['Pizza Dough', 'Tomato Sauce', 'Mozzarella', 'Basil'],
+    instructions: 'Cooking instructions here...',
+    tags: ['Italian', 'Dinner', 'Easy', 'Vegetarian'],
+  },
+];
 
 export const categories = [
   {
     title: 'Cuisine Type',
-    data: [
-      {subCategory: 'Italian', image: require('./images/pank.jpeg')},
-      {subCategory: 'Mexican', image: require('./images/pank.jpeg')},
-      {subCategory: 'Chinese', image: require('./images/pank.jpeg')},
-      {subCategory: 'Japanese', image: require('./images/pank.jpeg')},
-      {subCategory: 'Indian', image: require('./images/pank.jpeg')},
-      {subCategory: 'French', image: require('./images/pank.jpeg')},
+    subCategory: [
+      {name: 'Italian', image: require('../images/pank.jpeg')},
+      {name: 'Mexican', image: require('../images/pank.jpeg')},
+      {name: 'Chinese', image: require('../images/pank.jpeg')},
+      {name: 'Japanese', image: require('../images/pank.jpeg')},
+      {name: 'Indian', image: require('../images/pank.jpeg')},
+      {name: 'French', image: require('../images/pank.jpeg')},
     ],
   },
   {
     title: 'Meal Type',
-    data: [
-      {subCategory: 'Breakfast', image: require('./images/pank.jpeg')},
-      {subCategory: 'Lunch', image: require('./images/pank.jpeg')},
-      {subCategory: 'Dinner', image: require('./images/pank.jpeg')},
-      {subCategory: 'Snack', image: require('./images/pank.jpeg')},
-      {subCategory: 'Dessert', image: require('./images/pank.jpeg')},
-      {subCategory: 'Appetizer', image: require('./images/pank.jpeg')},
+    subCategory: [
+      {name: 'Breakfast', image: require('../images/pank.jpeg')},
+      {name: 'Lunch', image: require('../images/pank.jpeg')},
+      {name: 'Dinner', image: require('../images/pank.jpeg')},
+      {name: 'Snack', image: require('../images/pank.jpeg')},
+      {name: 'Dessert', image: require('../images/pank.jpeg')},
+      {name: 'Beverage', image: require('../images/pank.jpeg')},
     ],
   },
   {
     title: 'Cooking Method',
-    data: [
-      {subCategory: 'Baking', image: require('./images/pank.jpeg')},
-      {subCategory: 'Grilling', image: require('./images/pank.jpeg')},
-      {subCategory: 'Frying', image: require('./images/pank.jpeg')},
-      {subCategory: 'Steaming', image: require('./images/pank.jpeg')},
-      {subCategory: 'Roasting', image: require('./images/pank.jpeg')},
-      {subCategory: 'Stewing', image: require('./images/pank.jpeg')},
-    ],
-  },
-  {
-    title: 'Protein',
-    data: [
-      {subCategory: 'Chicken', image: require('./images/pank.jpeg')},
-      {subCategory: 'Beef', image: require('./images/pank.jpeg')},
-      {subCategory: 'Fish', image: require('./images/pank.jpeg')},
-      {subCategory: 'Tofu', image: require('./images/pank.jpeg')},
-      {subCategory: 'Pork', image: require('./images/pank.jpeg')},
-      {subCategory: 'Lamb', image: require('./images/pank.jpeg')},
+    subCategory: [
+      {name: 'Grilling', image: require('../images/pank.jpeg')},
+      {name: 'Baking', image: require('../images/pank.jpeg')},
+      {name: 'Frying', image: require('../images/pank.jpeg')},
+      {name: 'Steaming', image: require('../images/pank.jpeg')},
+      {name: 'Poaching', image: require('../images/pank.jpeg')},
+      {name: 'Roasting', image: require('../images/pank.jpeg')},
     ],
   },
   {
     title: 'Skill Level',
-    data: [
-      {subCategory: 'Beginner', image: require('./images/pank.jpeg')},
-      {subCategory: 'Intermediate', image: require('./images/pank.jpeg')},
-      {subCategory: 'Advanced', image: require('./images/pank.jpeg')},
-      {subCategory: 'Expert', image: require('./images/pank.jpeg')},
-      {subCategory: 'Master', image: require('./images/pank.jpeg')},
-      {subCategory: 'Professional', image: require('./images/pank.jpeg')},
-    ],
-  },
-  {
-    title: 'Favorites',
-    data: [
-      {subCategory: 'Favorite 1', image: require('./images/pank.jpeg')},
-      {subCategory: 'Favorite 2', image: require('./images/pank.jpeg')},
-      {subCategory: 'Favorite 3', image: require('./images/pank.jpeg')},
-      {subCategory: 'Favorite 4', image: require('./images/pank.jpeg')},
-      {subCategory: 'Favorite 5', image: require('./images/pank.jpeg')},
-      {subCategory: 'Favorite 6', image: require('./images/pank.jpeg')},
+    subCategory: [
+      {name: 'Beginner', image: require('../images/pank.jpeg')},
+      {name: 'Intermediate', image: require('../images/pank.jpeg')},
+      {name: 'Advanced', image: require('../images/pank.jpeg')},
+      {name: 'Expert', image: require('../images/pank.jpeg')},
+      {name: 'Professional', image: require('../images/pank.jpeg')},
+      {name: 'Master', image: require('../images/pank.jpeg')},
     ],
   },
 ];
