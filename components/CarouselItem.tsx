@@ -1,19 +1,36 @@
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {recipes} from './CategoriesData';
 
 type CarouselItemProps = {
   item: {
-    subCategory: string;
+    name: string;
     image: any;
   };
 };
 
-const CarouselItem: React.FC<CarouselItemProps> = ({item}) => (
-  <View style={styles.carouselItem}>
-    <Image source={item.image} style={styles.image} />
-    <Text style={styles.subCategory}>{item.subCategory}</Text>
-  </View>
-);
+const CarouselItem: React.FC<CarouselItemProps> = ({item}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+  const handlePress = () => {
+    const categoryType = item.name;
+    const recipesByType = recipes.filter(recipe =>
+      recipe.tags.includes(categoryType),
+    );
+    navigation.navigate('Recipe', {
+      recipes: recipesByType,
+      categoryType: categoryType,
+    });
+  };
+  return (
+    <TouchableOpacity onPress={handlePress} style={styles.carouselItem}>
+      <Image source={item.image} style={styles.image} />
+      <Text style={styles.subCategory}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   categoryContainer: {
