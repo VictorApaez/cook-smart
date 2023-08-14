@@ -126,3 +126,7 @@ export const categories = [
     ],
   },
 ];
+
+export const recipeTags = Array.from(
+  new Set(recipes.flatMap(recipe => recipe.tags)),
+);
