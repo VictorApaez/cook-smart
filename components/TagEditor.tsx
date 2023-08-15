@@ -34,6 +34,11 @@ export const TagEditor: React.FC<TagEditorProps> = ({
     setSelectedTags([...selectedTags, tag]);
   };
 
+  const handleTagRemove = (tag: string) => {
+    const newTags = selectedTags.filter(t => t !== tag);
+    setSelectedTags(newTags);
+  };
+
   const handleSave = () => {
     onSelectTags(selectedTags);
     onClose();
@@ -42,12 +47,25 @@ export const TagEditor: React.FC<TagEditorProps> = ({
   return (
     <Modal visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
+        <View style={styles.selectedTagsContainer}>
+          {selectedTags.map((tag: string, index: number) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleTagRemove(tag)}
+              style={styles.tagButton}>
+              <Text style={styles.tagButtonText}>{tag}</Text>
+              <Text style={styles.tagButtonRemoveText}>×</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         <TextInput
           value={searchQuery}
           onChangeText={setSearchQuery}
           placeholder="Search tags..."
           style={styles.searchInput}
         />
+
         <FlatList
           data={availableTags}
           keyExtractor={item => item}
@@ -55,17 +73,12 @@ export const TagEditor: React.FC<TagEditorProps> = ({
             <TouchableOpacity
               onPress={() => handleTagPress(item)}
               style={styles.tagItem}>
-              <Text>{item}</Text>
+              <Text style={styles.tagItemText}>{item}</Text>
+              <Text style={styles.tagItemText}>+</Text>
             </TouchableOpacity>
           )}
         />
-        <View style={styles.selectedTagsContainer}>
-          {selectedTags.map((tag: string, index: number) => (
-            <View key={index} style={styles.tagButton}>
-              <Text>{tag}</Text>
-            </View>
-          ))}
-        </View>
+
         <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
@@ -88,23 +101,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  addTagsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   tagItem: {
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#3FBEFF',
     borderRadius: 8,
     padding: 10,
     margin: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tagItemText: {
+    color: 'white',
   },
   selectedTagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: 10,
   },
   tagButton: {
-    backgroundColor: '#3498DB',
-    borderRadius: 15,
+    backgroundColor: '#FE6F3F',
+    borderRadius: 8,
     padding: 10,
     margin: 5,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  tagButtonText: {
+    color: 'white',
+  },
+  tagButtonRemoveText: {
+    color: 'white',
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
   saveButton: {
     backgroundColor: '#27AE60',
