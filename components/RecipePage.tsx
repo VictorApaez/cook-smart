@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {TagEditor} from './TagEditor';
-import {recipeTags} from './CategoriesData';
 
 export const RecipePage: React.FC<any> = ({route}) => {
   const {recipe} = route.params;
@@ -44,7 +43,14 @@ export const RecipePage: React.FC<any> = ({route}) => {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.subTitle}>Tags</Text>
+        <View style={styles.tagsHeader}>
+          <Text style={styles.subTitle}>Tags</Text>
+          <TouchableOpacity
+            onPress={handleOpenTagEditor}
+            style={styles.editButton}>
+            <Text>Edit Tags</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.tagButtonsContainer}>
           {tags.map((tag: string, index: number) => (
             <Text key={index} style={styles.tagButton}>
@@ -52,11 +58,6 @@ export const RecipePage: React.FC<any> = ({route}) => {
             </Text>
           ))}
         </View>
-        <TouchableOpacity
-          onPress={handleOpenTagEditor}
-          style={styles.editButton}>
-          <Text>Edit Tags</Text>
-        </TouchableOpacity>
       </View>
 
       <TagEditor
@@ -72,9 +73,10 @@ export const RecipePage: React.FC<any> = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#f8f8f8',
+    padding: 10,
+    backgroundColor: '#f0f0f0',
   },
+
   title: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -91,6 +93,19 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 20,
+    backgroundColor: 'white',
+    margin: 10, // this is linked to the padding of container ^^
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  sectionContent: {
+    padding: 20,
+  },
+  tagsHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   subTitle: {
     fontSize: 20,
@@ -121,13 +136,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   tagButton: {
-    backgroundColor: '#6db8ff',
+    backgroundColor: '#42a3ff',
     borderRadius: 10,
     padding: 10,
     margin: 5,
-  },
-  tagButtonText: {
-    color: '#ffffff',
+    color: 'white',
   },
   editButton: {},
 });
