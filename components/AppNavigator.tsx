@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RecipesPage from './RecipesPage';
 import CategoriesScreen from './CategoriesScreen';
 import {RecipePage} from './RecipePage';
+import {CreateRecipePage} from './CreateRecipePage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,6 +18,14 @@ function HomeStack() {
   );
 }
 
+function CreateRecipeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
+    </Stack.Navigator>
+  );
+}
+
 function AppNavigator() {
   return (
     <Tab.Navigator
@@ -24,6 +33,7 @@ function AppNavigator() {
         headerShown: false,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="CreateRecipe" component={CreateRecipeStack} />
     </Tab.Navigator>
   );
 }
