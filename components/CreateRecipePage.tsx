@@ -11,14 +11,35 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {TagEditor} from './TagEditor';
+import {createRecipe, Recipe} from './CategoriesData';
+type RecipeWithoutId = Omit<Recipe, 'id'>;
 
 export const CreateRecipePage: React.FC = () => {
-  const [recipe, setRecipe] = useState({
+  const [recipe, setRecipe] = useState<RecipeWithoutId>({
     name: '',
-    ingredients: '',
+    ingredients: [],
     instructions: '',
     tags: [] as string[],
+    image: require('../images/pank.jpeg'),
   });
+  const [currentIngredient, setCurrentIngredient] = useState('');
+
+  const handleAddIngredient = () => {
+    if (currentIngredient.trim() !== '') {
+      setRecipe(prev => ({
+        ...prev,
+        ingredients: [...prev.ingredients, currentIngredient.trim()],
+      }));
+      setCurrentIngredient('');
+    }
+  };
+
+  const handleRemoveIngredient = (index: number) => {
+    setRecipe(prev => ({
+      ...prev,
+      ingredients: prev.ingredients.filter((_, i) => i !== index),
+    }));
+  };
 
   const [tagEditorVisible, setTagEditorVisible] = useState(false);
 
@@ -31,7 +52,7 @@ export const CreateRecipePage: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log('Submitted data:', recipe);
+    createRecipe(recipe);
   };
 
   const handleTextChange = (fieldName: keyof typeof recipe) => {
@@ -57,13 +78,23 @@ export const CreateRecipePage: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.subTitle}>Ingredients</Text>
-          <TextInput
-            value={recipe.ingredients}
-            onChangeText={handleTextChange('ingredients')}
-            placeholder="Enter ingredients..."
-            style={styles.textInputMultiLine}
-            multiline
-          />
+
+          <View style={styles.ingredientInputContainer}>
+            <TextInput
+              value={currentIngredient}
+              onChangeText={setCurrentIngredient}
+              placeholder="Enter an ingredient..."
+              style={styles.textInputSingleLine}
+            />
+            <Button title="Add" onPress={handleAddIngredient} />
+          </View>
+
+          {recipe.ingredients.map((ingredient, index) => (
+            <View key={index} style={styles.ingredientItem}>
+              <Text>• {ingredient}</Text>
+              <Button title="X" onPress={() => handleRemoveIngredient(index)} />
+            </View>
+          ))}
         </View>
 
         <View style={styles.section}>
@@ -139,6 +170,18 @@ const styles = StyleSheet.create({
     padding: 5,
     marginRight: 5,
     marginBottom: 5,
+  },
+  ingredientInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ingredientItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
   },
 });
 
