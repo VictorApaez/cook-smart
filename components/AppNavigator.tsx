@@ -8,20 +8,20 @@ import {CreateRecipePage} from './CreateRecipePage';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function HomeStack() {
+function HomeNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={CategoriesScreen} />
+      <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Recipes" component={RecipesPage} />
-      <Stack.Screen name="Recipe" component={RecipePage} />
+      <Stack.Screen name="RecipeDetail" component={RecipePage} />
     </Stack.Navigator>
   );
 }
 
-function CreateRecipeStack() {
+function CreateRecipeNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
+      <Stack.Screen name="CreateRecipeDetail" component={CreateRecipePage} />
     </Stack.Navigator>
   );
 }
@@ -32,8 +32,8 @@ function AppNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="CreateRecipe" component={CreateRecipeStack} />
+      <Tab.Screen name="HomeTab" component={HomeNavigator} />
+      <Tab.Screen name="CreateRecipeTab" component={CreateRecipeNavigator} />
     </Tab.Navigator>
   );
 }
