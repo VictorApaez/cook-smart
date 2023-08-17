@@ -16,7 +16,7 @@ const RecipesPage: React.FC<any> = ({route}) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   const handleRecipePress = (recipe: Recipe) => {
-    navigation.navigate('Recipe', {recipe});
+    navigation.navigate('RecipeDetail', {recipe});
   };
   return (
     <ScrollView>
