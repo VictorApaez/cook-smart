@@ -15,6 +15,7 @@ import {TagEditor} from './TagEditor';
 export const CreateRecipePage: React.FC = () => {
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [name, SetName] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [tagEditorVisible, setTagEditorVisible] = useState(false);
 
@@ -41,12 +42,22 @@ export const CreateRecipePage: React.FC = () => {
         <Image source={require('../images/pank.jpeg')} style={styles.image} />
 
         <View style={styles.section}>
+          <Text style={styles.subTitle}>Name</Text>
+          <TextInput
+            value={name}
+            onChangeText={SetName}
+            placeholder="Enter a name..."
+            style={styles.textInputSingleLine}
+          />
+        </View>
+
+        <View style={styles.section}>
           <Text style={styles.subTitle}>Ingredients</Text>
           <TextInput
             value={ingredients}
             onChangeText={setIngredients}
             placeholder="Enter ingredients..."
-            style={styles.textInput}
+            style={styles.textInputMultiLine}
             multiline
           />
         </View>
@@ -57,7 +68,7 @@ export const CreateRecipePage: React.FC = () => {
             value={instructions}
             onChangeText={setInstructions}
             placeholder="Enter instructions..."
-            style={styles.textInput}
+            style={styles.textInputMultiLine}
             multiline
           />
         </View>
@@ -104,13 +115,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  textInput: {
+  textInputMultiLine: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 8,
     borderRadius: 5,
     minHeight: 100,
     textAlignVertical: 'top',
+  },
+  textInputSingleLine: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    borderRadius: 5,
   },
   tag: {
     backgroundColor: '#e5e5e5',
