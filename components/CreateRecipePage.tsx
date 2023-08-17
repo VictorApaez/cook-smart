@@ -53,6 +53,13 @@ export const CreateRecipePage: React.FC = () => {
 
   const handleSubmit = () => {
     createRecipe(recipe);
+    setRecipe({
+      name: '',
+      ingredients: [],
+      instructions: '',
+      tags: [] as string[],
+      image: require('../images/pank.jpeg'),
+    });
   };
 
   const handleTextChange = (fieldName: keyof typeof recipe) => {
