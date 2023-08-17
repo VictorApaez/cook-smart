@@ -28,11 +28,17 @@ function CreateRecipeNavigator() {
 
 function AppNavigator() {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Tab.Screen name="HomeTab" component={HomeNavigator} />
+    <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeNavigator}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('HomeTab', {screen: 'Categories'});
+          },
+        })}
+      />
       <Tab.Screen name="CreateRecipeTab" component={CreateRecipeNavigator} />
     </Tab.Navigator>
   );
