@@ -13,10 +13,13 @@ import {
 import {TagEditor} from './TagEditor';
 
 export const CreateRecipePage: React.FC = () => {
-  const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [name, SetName] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [recipe, setRecipe] = useState({
+    name: '',
+    ingredients: '',
+    instructions: '',
+    tags: [] as string[],
+  });
+
   const [tagEditorVisible, setTagEditorVisible] = useState(false);
 
   const handleOpenTagEditor = () => {
@@ -24,16 +27,17 @@ export const CreateRecipePage: React.FC = () => {
   };
 
   const handleSelectTags = (selectedTags: string[]) => {
-    setTags(selectedTags);
+    setRecipe(prevState => ({...prevState, tags: selectedTags}));
   };
 
   const handleSubmit = () => {
-    const formData = {
-      ingredients,
-      instructions,
-      tags,
+    console.log('Submitted data:', recipe);
+  };
+
+  const handleTextChange = (fieldName: keyof typeof recipe) => {
+    return (text: string) => {
+      setRecipe(prevState => ({...prevState, [fieldName]: text}));
     };
-    console.log('Submitted data:', formData);
   };
 
   return (
@@ -44,8 +48,8 @@ export const CreateRecipePage: React.FC = () => {
         <View style={styles.section}>
           <Text style={styles.subTitle}>Name</Text>
           <TextInput
-            value={name}
-            onChangeText={SetName}
+            value={recipe.name}
+            onChangeText={handleTextChange('name')}
             placeholder="Enter a name..."
             style={styles.textInputSingleLine}
           />
@@ -54,8 +58,8 @@ export const CreateRecipePage: React.FC = () => {
         <View style={styles.section}>
           <Text style={styles.subTitle}>Ingredients</Text>
           <TextInput
-            value={ingredients}
-            onChangeText={setIngredients}
+            value={recipe.ingredients}
+            onChangeText={handleTextChange('ingredients')}
             placeholder="Enter ingredients..."
             style={styles.textInputMultiLine}
             multiline
@@ -65,8 +69,8 @@ export const CreateRecipePage: React.FC = () => {
         <View style={styles.section}>
           <Text style={styles.subTitle}>Instructions</Text>
           <TextInput
-            value={instructions}
-            onChangeText={setInstructions}
+            value={recipe.instructions}
+            onChangeText={handleTextChange('instructions')}
             placeholder="Enter instructions..."
             style={styles.textInputMultiLine}
             multiline
@@ -75,7 +79,7 @@ export const CreateRecipePage: React.FC = () => {
 
         <View style={styles.section}>
           <Text style={styles.subTitle}>Tags</Text>
-          {tags.map((tag, index) => (
+          {recipe.tags.map((tag, index) => (
             <Text key={index} style={styles.tag}>
               {tag}
             </Text>
@@ -89,7 +93,7 @@ export const CreateRecipePage: React.FC = () => {
           visible={tagEditorVisible}
           onClose={() => setTagEditorVisible(false)}
           onSelectTags={handleSelectTags}
-          existingTags={tags}
+          existingTags={recipe.tags}
         />
       </ScrollView>
     </SafeAreaView>
