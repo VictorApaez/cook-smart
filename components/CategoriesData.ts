@@ -130,3 +130,13 @@ export const categories = [
 export const recipeTags = Array.from(
   new Set(recipes.flatMap(recipe => recipe.tags)),
 );
+
+export const createRecipe = (newRecipe: Omit<Recipe, 'id'>): Recipe => {
+  const recipeWithId = {
+    ...newRecipe,
+    id: recipes.length + 1,
+  };
+
+  recipes.push(recipeWithId);
+  return recipeWithId;
+};
