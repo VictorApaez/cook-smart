@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {recipeTags} from './CategoriesData';
+import {modalStyles} from '../styles/commonStyles';
 
 type TagEditorProps = {
   visible: boolean;
@@ -52,9 +53,9 @@ export const TagEditor: React.FC<TagEditorProps> = ({
       transparent={true}
       animationType="fade">
       <TouchableWithoutFeedback onPress={onClose}>
-        <View style={styles.modalBackdrop}>
+        <View style={modalStyles.modalBackdrop}>
           <TouchableWithoutFeedback>
-            <View style={styles.modalContainer}>
+            <View style={modalStyles.modalContainer}>
               <View style={styles.selectedTagsContainer}>
                 {selectedTags.map((tag: string, index: number) => (
                   <TouchableOpacity
@@ -99,20 +100,6 @@ export const TagEditor: React.FC<TagEditorProps> = ({
 };
 
 const styles = StyleSheet.create({
-  modalBackdrop: {
-    flex: 1,
-    justifyContent: 'center', // Center the modal vertically
-    alignItems: 'center', // Center the modal horizontally
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-  },
-  modalContainer: {
-    width: '90%', // Take up 90% of screen width
-    maxHeight: '80%', // Take up max of 80% of screen height
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    flex: 1,
-  },
   searchInput: {
     borderColor: '#CCCCCC',
     borderWidth: 1,
