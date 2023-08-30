@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {recipes} from './CategoriesData';
 
 type CarouselItemProps = {
@@ -24,30 +24,46 @@ const CarouselItem: React.FC<CarouselItemProps> = ({item}) => {
       categoryType: categoryType,
     });
   };
+
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.carouselItem}>
+    <TouchableOpacity style={styles.carouselItem} onPress={handlePress}>
       <Image source={item.image} style={styles.image} />
-      <Text style={styles.subCategory}>{item.name}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.subCategory}>{item.name}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
+export default CarouselItem;
+
 const styles = StyleSheet.create({
-  categoryContainer: {
-    padding: 10,
-  },
   carouselItem: {
     alignItems: 'center',
     padding: 5,
+    width: 150,
+    overflow: 'hidden',
+    margin: 5,
   },
   image: {
     width: 150,
     height: 100,
-    borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  textContainer: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    width: 150,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   subCategory: {
+    color: 'white',
+    fontSize: 16,
     textAlign: 'center',
   },
 });
-
-export default CarouselItem;
