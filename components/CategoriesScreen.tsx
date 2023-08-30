@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, Text, FlatList, Dimensions, StyleSheet} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
 import CarouselItem from './CarouselItem';
-import {categories, CategoriesData, SubCategory} from './CategoriesData';
+import {categories, SubCategory} from './CategoriesData';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -10,12 +9,15 @@ const CategoriesScreen: React.FC = () => {
   const renderSubCategories = (subCategory: SubCategory[], title: string) => (
     <View style={styles.categoryContainer}>
       <Text style={styles.categoryTitle}>{title}</Text>
-      <Carousel
+      <FlatList
         data={subCategory}
         renderItem={({item}) => <CarouselItem item={item} />}
-        sliderWidth={screenWidth}
-        itemWidth={160}
-        activeSlideAlignment={'start'}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={160 + 10}
+        snapToAlignment="start"
+        decelerationRate="fast"
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 
