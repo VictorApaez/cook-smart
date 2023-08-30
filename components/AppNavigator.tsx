@@ -10,7 +10,11 @@ const Tab = createBottomTabNavigator();
 
 function HomeNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+      }}>
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Recipes" component={RecipesPage} />
       <Stack.Screen name="RecipeDetail" component={RecipePage} />
