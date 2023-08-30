@@ -3,14 +3,17 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RecipesPage from './RecipesPage';
 import CategoriesScreen from './CategoriesScreen';
 import {RecipePage} from './RecipePage';
-import {CreateRecipePage} from './CreateRecipePage';
+import {CreateRecipePage} from './CreateRecipeScreen';
+import {WelcomeScreen} from './WelcomeScreen';
 
+const RootStack = createNativeStackNavigator(); // Create a Root Stack
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeNavigator() {
   return (
     <Stack.Navigator
+      initialRouteName="Categories"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -30,22 +33,27 @@ function CreateRecipeNavigator() {
   );
 }
 
-function AppNavigator() {
+function MainTabNavigator() {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeNavigator}
-        listeners={({navigation}) => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate('HomeTab', {screen: 'Categories'});
-          },
-        })}
-      />
+      <Tab.Screen name="HomeTab" component={HomeNavigator} />
       <Tab.Screen name="CreateRecipeTab" component={CreateRecipeNavigator} />
     </Tab.Navigator>
   );
 }
+
+const AppNavigator = () => {
+  return (
+    <RootStack.Navigator
+      initialRouteName="Welcome"
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+      }}>
+      <RootStack.Screen name="Welcome" component={WelcomeScreen} />
+      <RootStack.Screen name="MainApp" component={MainTabNavigator} />
+    </RootStack.Navigator>
+  );
+};
 
 export default AppNavigator;
