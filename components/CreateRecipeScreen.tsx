@@ -14,12 +14,14 @@ import {TagEditor} from './TagEditor';
 import {createRecipe, Recipe} from './CategoriesData';
 type RecipeWithoutId = Omit<Recipe, 'id'>;
 
-export const CreateRecipePage: React.FC = () => {
+export const CreateRecipePage: React.FC<{recipe?: Recipe}> = ({
+  recipe: initialRecipe,
+}) => {
   const [recipe, setRecipe] = useState<RecipeWithoutId>({
-    name: '',
-    ingredients: [],
-    instructions: '',
-    tags: [] as string[],
+    name: initialRecipe ? initialRecipe.name : '',
+    ingredients: initialRecipe ? initialRecipe.ingredients : [],
+    instructions: initialRecipe ? initialRecipe.instructions : '',
+    tags: initialRecipe ? initialRecipe.tags : ([] as string[]),
     image: require('../images/pank.jpeg'),
   });
   const [currentIngredient, setCurrentIngredient] = useState('');
