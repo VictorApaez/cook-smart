@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {TagEditor} from './TagEditor';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export const RecipePage: React.FC<any> = ({route}) => {
   const {recipe} = route.params;
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   const [tagEditorVisible, setTagEditorVisible] = useState(false);
   const [tags, setTags] = useState(recipe.tags);
@@ -22,10 +25,24 @@ export const RecipePage: React.FC<any> = ({route}) => {
   const handleSelectTags = (selectedTags: string[]) => {
     setTags(selectedTags);
   };
+  const handleEditRecipe = () => {
+    console.log(recipe);
+    navigation.navigate('CreateRecipe', {
+      recipe: recipe,
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>{recipe.name}</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>{recipe.name}</Text>
+        <TouchableOpacity
+          onPress={handleEditRecipe}
+          style={styles.editRecipeButton}>
+          <Text style={styles.editText}>Edit Recipe</Text>
+        </TouchableOpacity>
+      </View>
+
       <Image source={recipe.image} style={styles.image} />
       <View style={styles.section}>
         <Text style={styles.subTitle}>Ingredients</Text>
@@ -76,7 +93,24 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f0f0f0',
   },
-
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#f8f9fa',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9ecef',
+  },
+  editRecipeButton: {
+    backgroundColor: '#6c757d',
+    borderRadius: 5,
+    padding: 10,
+  },
+  editText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
