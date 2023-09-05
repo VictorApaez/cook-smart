@@ -14,9 +14,9 @@ import {TagEditor} from './TagEditor';
 import {createRecipe, Recipe} from './CategoriesData';
 type RecipeWithoutId = Omit<Recipe, 'id'>;
 
-export const CreateRecipePage: React.FC<{recipe?: Recipe}> = ({
-  recipe: initialRecipe,
-}) => {
+export const CreateRecipePage: React.FC<any> = ({route}) => {
+  const initialRecipe = route.params?.recipe;
+
   const [recipe, setRecipe] = useState<RecipeWithoutId>({
     name: initialRecipe ? initialRecipe.name : '',
     ingredients: initialRecipe ? initialRecipe.ingredients : [],
@@ -69,7 +69,6 @@ export const CreateRecipePage: React.FC<{recipe?: Recipe}> = ({
       setRecipe(prevState => ({...prevState, [fieldName]: text}));
     };
   };
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={styles.container}>
