@@ -226,3 +226,22 @@ export const createRecipe = (newRecipe: Omit<Recipe, 'id'>): Recipe => {
   recipes.push(recipeWithId);
   return recipeWithId;
 };
+
+export const updateRecipe = (
+  id: number,
+  newRecipe: Omit<Recipe, 'id'>,
+): Recipe => {
+  const index = recipes.findIndex(recipe => recipe.id === id);
+
+  if (index !== -1) {
+    recipes[index] = {
+      ...recipes[index],
+      ...newRecipe,
+      id,
+    };
+    return recipes[index];
+  } else {
+    console.log('CategoriesData - updateRecipe: Recipe Not Found');
+    throw new Error('Recipe Not Found');
+  }
+};
