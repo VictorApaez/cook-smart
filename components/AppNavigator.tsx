@@ -21,6 +21,7 @@ function HomeNavigator() {
       <Stack.Screen name="Categories" component={CategoriesScreen} />
       <Stack.Screen name="Recipes" component={RecipesPage} />
       <Stack.Screen name="RecipeDetail" component={RecipePage} />
+      <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
     </Stack.Navigator>
   );
 }
@@ -28,7 +29,7 @@ function HomeNavigator() {
 function CreateRecipeNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CreateRecipeDetail" component={CreateRecipePage} />
+      <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
     </Stack.Navigator>
   );
 }
@@ -36,7 +37,16 @@ function CreateRecipeNavigator() {
 function MainTabNavigator() {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen name="HomeTab" component={HomeNavigator} />
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeNavigator}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('HomeTab', {screen: 'Categories'});
+          },
+        })}
+      />
       <Tab.Screen name="CreateRecipeTab" component={CreateRecipeNavigator} />
     </Tab.Navigator>
   );
