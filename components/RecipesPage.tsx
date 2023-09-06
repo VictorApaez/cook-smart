@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Recipe} from './CategoriesData';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 const RecipesPage: React.FC<any> = ({route}) => {
   const {recipes, categoryType} = route.params;
@@ -22,16 +23,20 @@ const RecipesPage: React.FC<any> = ({route}) => {
     <ScrollView>
       <Text style={styles.categoryType}>{categoryType}</Text>
       {recipes.map((recipe: Recipe, key: number) => (
-        <TouchableOpacity
-          key={key}
-          style={styles.recipeContainer}
-          onPress={() => handleRecipePress(recipe)}>
-          <View style={styles.imageContainer}>
-            <Image source={recipe.image} style={styles.recipeImage} />
-            <View style={styles.overlay} />
-            <Text style={styles.recipeName}>{recipe.name}</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <FontAwesomeIcon name="heart" style={styles.icon} />
+
+          <TouchableOpacity
+            key={key}
+            style={styles.recipeContainer}
+            onPress={() => handleRecipePress(recipe)}>
+            <View style={styles.imageContainer}>
+              <Image source={recipe.image} style={styles.recipeImage} />
+              <View style={styles.overlay} />
+              <Text style={styles.recipeName}>{recipe.name}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       ))}
     </ScrollView>
   );
@@ -43,6 +48,9 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
   },
+  container: {
+    position: 'relative',
+  },
   recipeContainer: {
     padding: 1,
   },
@@ -50,6 +58,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
     height: 200,
+  },
+  icon: {
+    color: 'white',
+    position: 'absolute',
+    top: 15,
+    right: 20,
+    zIndex: 20,
+    fontSize: 20,
   },
   recipeImage: {
     width: '100%',
