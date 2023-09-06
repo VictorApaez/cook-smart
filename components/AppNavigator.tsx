@@ -36,10 +36,17 @@ function CreateRecipeNavigator() {
 
 function MainTabNavigator() {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: tabBarStyle,
+      }}>
       <Tab.Screen
         name="HomeTab"
         component={HomeNavigator}
+        options={{
+          tabBarLabel: 'Home',
+        }}
         listeners={({navigation}) => ({
           tabPress: e => {
             e.preventDefault();
@@ -47,7 +54,13 @@ function MainTabNavigator() {
           },
         })}
       />
-      <Tab.Screen name="CreateRecipeTab" component={CreateRecipeNavigator} />
+      <Tab.Screen
+        name="CreateRecipeTab"
+        component={CreateRecipeNavigator}
+        options={{
+          tabBarLabel: 'Create Recipe',
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -67,3 +80,9 @@ const AppNavigator = () => {
 };
 
 export default AppNavigator;
+
+const tabBarStyle = {
+  backgroundColor: '#000',
+  activeTintColor: '#fff',
+  inactiveTintColor: '#ccc',
+};
