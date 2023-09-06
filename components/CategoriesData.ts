@@ -246,15 +246,35 @@ export const updateRecipe = (
   }
 };
 
-export const updateTags = (id: number, newTag: string) => {
+export const addTag = (id: number, newTag: string) => {
   const index = recipes.findIndex(recipe => recipe.id == id);
   if (index !== -1) {
     recipes[index] = {
       ...recipes[index],
       tags: [...recipes[index].tags, newTag],
     };
+    return recipes[index].tags;
   } else {
     console.log('CategoriesData - updateTags: ID Not Found');
     throw new Error('ID Not Found');
+  }
+};
+
+export const removeTag = (recipeId: number, target: string) => {
+  const recipeIndex = recipes.findIndex(recipe => recipe.id == recipeId);
+
+  if (recipeIndex !== -1) {
+    const tagIndex = recipes[recipeIndex].tags.findIndex(tag => tag === target);
+
+    if (tagIndex !== -1) {
+      recipes[recipeIndex].tags.splice(tagIndex, 1);
+      return recipes[recipeIndex].tags;
+    } else {
+      console.log('CategoriesData - removeTags: Tag Not Found');
+      throw new Error('Tag Not Found');
+    }
+  } else {
+    console.log('CategoriesData - removeTags: Recipe ID Not Found');
+    throw new Error('Recipe ID Not Found');
   }
 };
