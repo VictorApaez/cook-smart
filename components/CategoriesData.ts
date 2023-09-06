@@ -245,3 +245,16 @@ export const updateRecipe = (
     throw new Error('Recipe Not Found');
   }
 };
+
+export const updateTags = (id: number, newTag: string) => {
+  const index = recipes.findIndex(recipe => recipe.id == id);
+  if (index !== -1) {
+    recipes[index] = {
+      ...recipes[index],
+      tags: [...recipes[index].tags, newTag],
+    };
+  } else {
+    console.log('CategoriesData - updateTags: ID Not Found');
+    throw new Error('ID Not Found');
+  }
+};
