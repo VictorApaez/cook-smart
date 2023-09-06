@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Recipe} from './CategoriesData';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {updateTags} from './CategoriesData';
 
 const RecipesPage: React.FC<any> = ({route}) => {
   const {recipes, categoryType} = route.params;
@@ -19,13 +20,19 @@ const RecipesPage: React.FC<any> = ({route}) => {
   const handleRecipePress = (recipe: Recipe) => {
     navigation.navigate('RecipeDetail', {recipe});
   };
+  const handleAddFavorite = (id: number, newTag: string = 'Favorite') => {
+    updateTags(id, newTag);
+  };
   return (
     <ScrollView>
       <Text style={styles.categoryType}>{categoryType}</Text>
       {recipes.map((recipe: Recipe, key: number) => (
         <View style={styles.container}>
-          <FontAwesomeIcon name="heart" style={styles.icon} />
-
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => handleAddFavorite(recipe.id)}>
+            <FontAwesomeIcon name="heart" style={styles.icon} />
+          </TouchableOpacity>
           <TouchableOpacity
             key={key}
             style={styles.recipeContainer}
@@ -59,12 +66,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
   },
-  icon: {
-    color: 'white',
+  iconContainer: {
     position: 'absolute',
     top: 15,
     right: 20,
     zIndex: 20,
+  },
+  icon: {
+    color: 'white',
+
     fontSize: 20,
   },
   recipeImage: {
