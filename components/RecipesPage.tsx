@@ -1,49 +1,32 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+
+import {Text, ScrollView, StyleSheet} from 'react-native';
 import {Recipe} from './CategoriesData';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {updateTags} from './CategoriesData';
+import RecipesItem from './RecipesItem';
 
-const RecipesPage: React.FC<any> = ({route}) => {
-  const {recipes, categoryType} = route.params;
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+interface RecipesPageProps {
+  route?: any;
+  recipes?: Recipe[];
+  categoryType?: string;
+}
 
-  const handleRecipePress = (recipe: Recipe) => {
-    navigation.navigate('RecipeDetail', {recipe});
-  };
-  const handleAddFavorite = (id: number, newTag: string = 'Favorite') => {
-    updateTags(id, newTag);
-  };
+const RecipesPage: React.FC<RecipesPageProps> = ({
+  route,
+  recipes: propRecipes,
+  categoryType: propCategoryType,
+}) => {
+  // This component will accept recipes from either props or from the route object (navigation)
+  const {recipes: routeRecipes, categoryType: routeCategoryType} =
+    route?.params || {};
+
+  const recipes = propRecipes || routeRecipes;
+  const categoryType = propCategoryType || routeCategoryType;
+
   return (
     <ScrollView>
       <Text style={styles.categoryType}>{categoryType}</Text>
       {recipes.map((recipe: Recipe, key: number) => (
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => handleAddFavorite(recipe.id)}>
-            <FontAwesomeIcon name="heart" style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            key={key}
-            style={styles.recipeContainer}
-            onPress={() => handleRecipePress(recipe)}>
-            <View style={styles.imageContainer}>
-              <Image source={recipe.image} style={styles.recipeImage} />
-              <View style={styles.overlay} />
-              <Text style={styles.recipeName}>{recipe.name}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <RecipesItem recipe={recipe} id={key} />
       ))}
     </ScrollView>
   );
@@ -54,50 +37,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black',
     textAlign: 'center',
-  },
-  container: {
-    position: 'relative',
-  },
-  recipeContainer: {
-    padding: 1,
-  },
-  imageContainer: {
-    position: 'relative',
-    width: '100%',
-    height: 200,
-  },
-  iconContainer: {
-    position: 'absolute',
-    top: 15,
-    right: 20,
-    zIndex: 20,
-  },
-  icon: {
-    color: 'white',
-
-    fontSize: 20,
-  },
-  recipeImage: {
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'black',
-    opacity: 0.5,
-  },
-  recipeName: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    color: 'white',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontSize: 24,
   },
 });
 
