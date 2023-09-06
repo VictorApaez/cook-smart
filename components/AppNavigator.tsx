@@ -5,6 +5,8 @@ import CategoriesScreen from './CategoriesScreen';
 import {RecipePage} from './RecipePage';
 import {CreateRecipePage} from './CreateRecipeScreen';
 import {WelcomeScreen} from './WelcomeScreen';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
+import {View} from 'react-native';
 
 const RootStack = createNativeStackNavigator(); // Create a Root Stack
 const Stack = createNativeStackNavigator();
@@ -45,6 +47,9 @@ function MainTabNavigator() {
         name="HomeTab"
         component={HomeNavigator}
         options={{
+          tabBarIcon: ({color, size}) => (
+            <FontAwesomeIcon name="home" size={size} color={color} />
+          ),
           tabBarLabel: 'Home',
         }}
         listeners={({navigation}) => ({
@@ -54,11 +59,40 @@ function MainTabNavigator() {
           },
         })}
       />
+
       <Tab.Screen
         name="CreateRecipeTab"
         component={CreateRecipeNavigator}
         options={{
-          tabBarLabel: 'Create Recipe',
+          tabBarIcon: ({color, size}) => (
+            <View
+              style={{
+                borderRadius: size * 2.5,
+                backgroundColor: 'black',
+                width: size * 2.5,
+                height: size * 2.5,
+                borderWidth: 3,
+                borderColor: color,
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                top: -size,
+              }}>
+              <FontAwesomeIcon name="plus" size={size * 1.5} color={color} />
+            </View>
+          ),
+          tabBarLabel: '',
+        }}
+      />
+
+      <Tab.Screen
+        name="FavoritesTab"
+        component={CreateRecipeNavigator}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <FontAwesomeIcon name="heart" size={size} color={color} />
+          ),
+          tabBarLabel: 'Favorites',
         }}
       />
     </Tab.Navigator>
@@ -85,4 +119,7 @@ const tabBarStyle = {
   backgroundColor: '#000',
   activeTintColor: '#fff',
   inactiveTintColor: '#ccc',
+  borderTopWidth: 3,
+  borderTopColor: '#ccc',
+  height: 60,
 };
