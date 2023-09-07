@@ -4,8 +4,12 @@ import {categories} from '../../components/CategoriesData';
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async () => {
-    //simulate db fetch
-    const response = categories;
+    // simulating data loading for 3 seconds
+    const response = await new Promise(resolve => {
+      setTimeout(() => {
+        resolve(categories);
+      }, 3000);
+    });
     return response;
   },
 );
