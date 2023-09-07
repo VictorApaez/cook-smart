@@ -1,11 +1,29 @@
-import React from 'react';
-import {View, Text, FlatList, Dimensions, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import CarouselItem from './CarouselItem';
 import {categories, SubCategory} from './CategoriesData';
-
-const {width: screenWidth} = Dimensions.get('window');
+import {fetchCategories} from '../redux/categories/categoriesThunks';
+import {useAppDispatch, useAppSelector} from '../redux/store';
 
 const CategoriesScreen: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const categoriesStatus = useAppSelector(state => state.categories.status);
+  const categoriesState = useAppSelector(state => state.categories);
+
+  useEffect(() => {
+    if (categoriesStatus === 'idle') {
+      dispatch(fetchCategories());
+    }
+  }, [categoriesStatus, dispatch]);
+
+  if (categoriesStatus === 'loading') {
+    return <Text>Loading</Text>;
+  }
+
+  if (categoriesStatus === 'failed') {
+    return <Text>Failed</Text>;
+  }
+
   const renderSubCategories = (subCategory: SubCategory[], title: string) => (
     <View style={styles.categoryContainer}>
       <Text style={styles.categoryTitle}>{title}</Text>
@@ -24,7 +42,7 @@ const CategoriesScreen: React.FC = () => {
 
   return (
     <FlatList
-      data={categories}
+      data={categoriesState.categories}
       renderItem={({item}) => renderSubCategories(item.subCategory, item.title)}
       keyExtractor={(item, index) => index.toString()}
     />
