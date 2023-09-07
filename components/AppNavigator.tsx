@@ -7,6 +7,7 @@ import {CreateRecipePage} from './CreateRecipeScreen';
 import {WelcomeScreen} from './WelcomeScreen';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
 import {View} from 'react-native';
+import {recipes} from './CategoriesData';
 
 const RootStack = createNativeStackNavigator(); // Create a Root Stack
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,21 @@ function CreateRecipeNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
+    </Stack.Navigator>
+  );
+}
+
+function FavoritesNavigator() {
+  const favoriteRecipes = recipes.filter(recipe => {
+    return recipe.tags.find(tag => tag === 'Favorite');
+  });
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="FavoriteRecipes"
+        component={RecipesPage}
+        initialParams={{recipes: favoriteRecipes, categoryType: 'Favorites'}}
+      />
     </Stack.Navigator>
   );
 }
@@ -87,7 +103,7 @@ function MainTabNavigator() {
 
       <Tab.Screen
         name="FavoritesTab"
-        component={CreateRecipeNavigator}
+        component={FavoritesNavigator}
         options={{
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon name="heart" size={size} color={color} />
