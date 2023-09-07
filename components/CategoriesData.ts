@@ -12,32 +12,17 @@ export type SubCategory = {
   image: any;
 };
 
-export type CategoryGroup = {
-  [key: string]: SubCategory[];
+export type Category = {
+  title: string;
+  subCategory: SubCategory[];
 };
 
 export type CategoriesData = {
   recipes: Recipe[];
-  categories: CategoryGroup;
+  categories: Category;
 };
 
 export const recipes = [
-  {
-    id: 1,
-    name: 'Spaghetti Carbonara',
-    image: require('../images/pank.jpeg'),
-    ingredients: ['Eggs', 'Pasta', 'Bacon'],
-    instructions: 'Cooking instructions here...',
-    tags: ['Italian', 'Dinner', 'Easy', 'Pork'],
-  },
-  {
-    id: 2,
-    name: 'Sushi Rolls',
-    image: require('../images/pank.jpeg'),
-    ingredients: ['Rice', 'Fish', 'Seaweed'],
-    instructions: 'Cooking instructions here...',
-    tags: ['Japanese', 'Lunch', 'Medium', 'Fish'],
-  },
   {
     id: 1,
     name: 'Spaghetti Carbonara',
