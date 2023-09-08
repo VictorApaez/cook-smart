@@ -29,7 +29,7 @@ export const modalStyles = StyleSheet.create({
     maxHeight: '80%',
     padding: 20,
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
+    borderRadius: 20,
     flex: 1,
   },
 });
