@@ -196,6 +196,17 @@ export const categories = [
       {name: 'Master', image: require('../images/pank.jpeg')},
     ],
   },
+  {
+    title: 'Favorites',
+    subCategory: [
+      {name: 'Beginner', image: require('../images/pank.jpeg')},
+      {name: 'Intermediate', image: require('../images/pank.jpeg')},
+      {name: 'Advanced', image: require('../images/pank.jpeg')},
+      {name: 'Expert', image: require('../images/pank.jpeg')},
+      {name: 'Professional', image: require('../images/pank.jpeg')},
+      {name: 'Master', image: require('../images/pank.jpeg')},
+    ],
+  },
 ];
 
 export const recipeTags = Array.from(
