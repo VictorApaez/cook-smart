@@ -1,11 +1,21 @@
-import React, {useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Button,
+  ScrollView,
+} from 'react-native';
 import CarouselItem from './CarouselItem';
 import {categories, SubCategory} from './CategoriesData';
 import {fetchCategories} from '../redux/categories/categoriesThunks';
 import {useAppDispatch, useAppSelector} from '../redux/store';
+import {CreateCategoryModal} from './CreateCategoryModal';
 
 const CategoriesScreen: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const dispatch = useAppDispatch();
   const categoriesStatus = useAppSelector(state => state.categories.status);
   const categoriesState = useAppSelector(state => state.categories);
@@ -25,8 +35,9 @@ const CategoriesScreen: React.FC = () => {
   }
 
   const renderSubCategories = (subCategory: SubCategory[], title: string) => (
-    <View style={styles.categoryContainer}>
+    <View>
       <Text style={styles.categoryTitle}>{title}</Text>
+
       <FlatList
         data={subCategory}
         renderItem={({item}) => <CarouselItem item={item} />}
@@ -41,17 +52,43 @@ const CategoriesScreen: React.FC = () => {
   );
 
   return (
-    <FlatList
-      data={categoriesState.categories}
-      renderItem={({item}) => renderSubCategories(item.subCategory, item.title)}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Categories</Text>
+        <Button title="Add Category" onPress={() => setModalVisible(true)} />
+      </View>
+      <CreateCategoryModal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
+      <FlatList
+        style={styles.categoriesFlatList}
+        data={categoriesState.categories}
+        scrollEnabled={false}
+        renderItem={({item}) =>
+          renderSubCategories(item.subCategory, item.title)
+        }
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  categoryContainer: {
-    padding: 10,
+  container: {
+    flex: 1,
+  },
+  categoriesFlatList: {
+    flexGrow: 0,
+    paddingLeft: 10,
+    paddingBottom: 50,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerTitle: {
+    fontSize: 40,
   },
   categoryTitle: {
     fontSize: 18,
