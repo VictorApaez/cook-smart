@@ -5,12 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  Modal,
   StyleSheet,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import {recipeTags} from './CategoriesData';
-import {modalStyles} from '../styles/commonStyles';
+import {ContentModal} from './ContentModal';
 
 type TagEditorProps = {
   visible: boolean;
@@ -47,55 +45,43 @@ export const TagEditor: React.FC<TagEditorProps> = ({
   };
 
   return (
-    <Modal
-      visible={visible}
-      onRequestClose={onClose}
-      transparent={true}
-      animationType="fade">
-      <TouchableWithoutFeedback onPress={onClose}>
-        <View style={modalStyles.modalBackdrop}>
-          <TouchableWithoutFeedback>
-            <View style={modalStyles.modalContainer}>
-              <View style={styles.selectedTagsContainer}>
-                {selectedTags.map((tag: string, index: number) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => handleTagRemove(tag)}
-                    style={styles.tagButton}>
-                    <Text style={styles.tagButtonText}>{tag}</Text>
-                    <Text style={styles.tagButtonRemoveText}>×</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+    <ContentModal onClose={onClose} visible={visible}>
+      <View style={styles.selectedTagsContainer}>
+        {selectedTags.map((tag: string, index: number) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleTagRemove(tag)}
+            style={styles.tagButton}>
+            <Text style={styles.tagButtonText}>{tag}</Text>
+            <Text style={styles.tagButtonRemoveText}>×</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
-              <TextInput
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholder="Search tags..."
-                style={styles.searchInput}
-              />
+      <TextInput
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholder="Search tags..."
+        style={styles.searchInput}
+      />
 
-              <FlatList
-                data={availableTags}
-                keyExtractor={item => item}
-                renderItem={({item}) => (
-                  <TouchableOpacity
-                    onPress={() => handleTagPress(item)}
-                    style={styles.tagItem}>
-                    <Text style={styles.tagItemText}>{item}</Text>
-                    <Text style={styles.tagItemText}>+</Text>
-                  </TouchableOpacity>
-                )}
-              />
+      <FlatList
+        data={availableTags}
+        keyExtractor={item => item}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => handleTagPress(item)}
+            style={styles.tagItem}>
+            <Text style={styles.tagItemText}>{item}</Text>
+            <Text style={styles.tagItemText}>+</Text>
+          </TouchableOpacity>
+        )}
+      />
 
-              <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </TouchableWithoutFeedback>
-    </Modal>
+      <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
+    </ContentModal>
   );
 };
 
