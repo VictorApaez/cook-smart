@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {fetchRecipes} from './recipesThunks';
-import {Recipe} from '../../components/CategoriesData';
+import {Recipe} from '../../data/CategoriesData';
 
 interface RecipesState {
   recipes: Recipe[];

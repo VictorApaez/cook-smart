@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {recipes} from '../../components/CategoriesData';
+import {recipes} from '../../data/CategoriesData';
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchRecipes',

@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {fetchCategories} from './categoriesThunks';
-import {Category} from '../../components/CategoriesData';
+import {Category} from '../../data/CategoriesData';
 
 export type CategoriesState = {
   categories: Category[];

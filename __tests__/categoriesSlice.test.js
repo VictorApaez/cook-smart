@@ -3,7 +3,7 @@ import axios from 'axios';
 import categoriesReducer from '../redux/categories/categoriesSlice';
 import {fetchCategories} from '../redux/categories/categoriesThunks';
 import recipesReducer from '../redux/recipes/recipesSlice';
-import {categories} from '../components/CategoriesData';
+import {categories} from '../data/CategoriesData';
 
 jest.mock('axios');
 
