@@ -1,22 +1,5 @@
 import {StyleSheet} from 'react-native';
 
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 8,
-  },
-});
-
 export const modalStyles = StyleSheet.create({
   modalBackdrop: {
     flex: 1,
@@ -33,3 +16,12 @@ export const modalStyles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export const colors = {
+  primary: '#FF4757', // vibrant red
+  secondary: '#2ECC71', // vibrant green
+  accent: '#FFD700', // vibrant
+  background: '#f0f0f0', // white
+  textPrimary: '#333333', // Dark text color
+  textSecondary: '#7F8C8D', // Secondary text color (grayish)
+};
