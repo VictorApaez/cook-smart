@@ -4,14 +4,16 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Button,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import CarouselItem from './CarouselItem';
-import {categories, SubCategory} from './CategoriesData';
+import {SubCategory} from './CategoriesData';
 import {fetchCategories} from '../redux/categories/categoriesThunks';
 import {useAppDispatch, useAppSelector} from '../redux/store';
 import {CreateCategoryModal} from './CreateCategoryModal';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {iconStyles} from '../styles/commonStyles';
 
 const CategoriesScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -55,7 +57,9 @@ const CategoriesScreen: React.FC = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Categories</Text>
-        <Button title="Add Category" onPress={() => setModalVisible(true)} />
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <FontAwesomeIcon name="edit" style={iconStyles.edit} />
+        </TouchableOpacity>
       </View>
       <CreateCategoryModal
         modalVisible={modalVisible}
@@ -86,9 +90,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
   },
   headerTitle: {
-    fontSize: 40,
+    fontSize: 30,
   },
   categoryTitle: {
     fontSize: 18,
