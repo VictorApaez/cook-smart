@@ -7,7 +7,7 @@ import {
   FlatList,
   StyleSheet,
 } from 'react-native';
-import {recipeTags} from './CategoriesData';
+import {recipeTags} from '../data/CategoriesData';
 import {ContentModal} from './ContentModal';
 
 type TagEditorProps = {

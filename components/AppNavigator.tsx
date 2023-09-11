@@ -1,13 +1,13 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import RecipesPage from './RecipesScreen';
-import CategoriesScreen from './CategoriesScreen';
-import {RecipePage} from './RecipeScreen';
-import {CreateRecipePage} from './CreateRecipeScreen';
-import {WelcomeScreen} from './WelcomeScreen';
+import RecipesPage from '../pages/Recipes/RecipesScreen';
+import CategoriesScreen from '../pages/Categories/CategoriesScreen';
+import {RecipePage} from '../pages/Recipe Detail/RecipeScreen';
+import {CreateRecipePage} from '../pages/Create/Edit Recipe/CreateRecipeScreen';
+import {WelcomeScreen} from '../pages/Welcome/WelcomeScreen';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
 import {View} from 'react-native';
-import {recipes} from './CategoriesData';
+import {recipes} from '../data/CategoriesData';
 
 const RootStack = createNativeStackNavigator(); // Create a Root Stack
 const Stack = createNativeStackNavigator();
