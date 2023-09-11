@@ -25,3 +25,14 @@ export const colors = {
   textPrimary: '#333333', // Dark text color
   textSecondary: '#7F8C8D', // Secondary text color (grayish)
 };
+
+export const iconStyles = StyleSheet.create({
+  edit: {
+    fontSize: 20,
+    color: 'black',
+  },
+  heart: {
+    fontSize: 20,
+    color: 'white',
+  },
+});
