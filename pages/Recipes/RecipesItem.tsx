@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 15,
     right: 20,
-    zIndex: 20,
+    zIndex: 1,
   },
   icon: {
     fontSize: 20,
