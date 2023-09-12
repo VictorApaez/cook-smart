@@ -14,10 +14,10 @@ import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {CreateCategoryModal} from './CreateCategoryModal';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {iconStyles} from '../../styles/commonStyles';
+import {SearchBar} from '../../components/SearchBar';
 
 const CategoriesScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
   const dispatch = useAppDispatch();
   const categoriesStatus = useAppSelector(state => state.categories.status);
   const categoriesState = useAppSelector(state => state.categories);
@@ -36,9 +36,9 @@ const CategoriesScreen: React.FC = () => {
     return <Text>Failed</Text>;
   }
 
-  const renderSubCategories = (subCategory: SubCategory[], title: string) => (
+  const renderSubCategories = (subCategory: SubCategory[], name: string) => (
     <View>
-      <Text style={styles.categoryTitle}>{title}</Text>
+      <Text style={styles.categoryTitle}>{name}</Text>
 
       <FlatList
         data={subCategory}
@@ -53,6 +53,10 @@ const CategoriesScreen: React.FC = () => {
     </View>
   );
 
+  const subCategories = categoriesState.categories.flatMap(
+    category => category.subCategory,
+  );
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -61,6 +65,7 @@ const CategoriesScreen: React.FC = () => {
           <FontAwesomeIcon name="edit" style={iconStyles.edit} />
         </TouchableOpacity>
       </View>
+      <SearchBar list={subCategories} />
       <CreateCategoryModal
         modalVisible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -70,7 +75,7 @@ const CategoriesScreen: React.FC = () => {
         data={categoriesState.categories}
         scrollEnabled={false}
         renderItem={({item}) =>
-          renderSubCategories(item.subCategory, item.title)
+          renderSubCategories(item.subCategory, item.name)
         }
         keyExtractor={(item, index) => index.toString()}
       />
@@ -84,6 +89,7 @@ const styles = StyleSheet.create({
   },
   categoriesFlatList: {
     flexGrow: 0,
+    marginTop: 10,
     paddingLeft: 10,
     paddingBottom: 50,
   },
