@@ -13,7 +13,7 @@ export type SubCategory = {
 };
 
 export type Category = {
-  title: string;
+  name: string;
   subCategory: SubCategory[];
 };
 
@@ -153,7 +153,7 @@ export const recipes = [
 
 export const categories = [
   {
-    title: 'Cuisine Type',
+    name: 'Cuisine Type',
     subCategory: [
       {name: 'Italian', image: require('../images/pank.jpeg')},
       {name: 'Mexican', image: require('../images/pank.jpeg')},
@@ -164,7 +164,7 @@ export const categories = [
     ],
   },
   {
-    title: 'Meal Type',
+    name: 'Meal Type',
     subCategory: [
       {name: 'Breakfast', image: require('../images/pank.jpeg')},
       {name: 'Lunch', image: require('../images/pank.jpeg')},
@@ -175,7 +175,7 @@ export const categories = [
     ],
   },
   {
-    title: 'Cooking Method',
+    name: 'Cooking Method',
     subCategory: [
       {name: 'Grilling', image: require('../images/pank.jpeg')},
       {name: 'Baking', image: require('../images/pank.jpeg')},
@@ -186,7 +186,7 @@ export const categories = [
     ],
   },
   {
-    title: 'Skill Level',
+    name: 'Skill Level',
     subCategory: [
       {name: 'Beginner', image: require('../images/pank.jpeg')},
       {name: 'Intermediate', image: require('../images/pank.jpeg')},
@@ -197,7 +197,7 @@ export const categories = [
     ],
   },
   {
-    title: 'Favorites',
+    name: 'Favorites',
     subCategory: [
       {name: 'Beginner', image: require('../images/pank.jpeg')},
       {name: 'Intermediate', image: require('../images/pank.jpeg')},
