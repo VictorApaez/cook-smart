@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RecipesPage from '../pages/Recipes/RecipesScreen';
 import CategoriesScreen from '../pages/Categories/CategoriesScreen';
 import {RecipePage} from '../pages/Recipe Detail/RecipeScreen';
-import {CreateRecipePage} from '../pages/Create/Edit Recipe/CreateRecipeScreen';
+import {CreateRecipePage} from '../pages/CreateEditRecipe/CreateRecipeScreen';
 import {WelcomeScreen} from '../pages/Welcome/WelcomeScreen';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
 import {View} from 'react-native';
