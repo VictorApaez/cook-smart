@@ -1,79 +1,70 @@
 import React, {useState, useMemo} from 'react';
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import {iconStyles} from '../styles/commonStyles';
 
-type SearchBarProps = {
-  list: {name: string}[];
-};
+import {SearchBarProps} from './AppNavigator';
 
-export const SearchBar: React.FC<SearchBarProps> = ({list}) => {
+export const SearchBar: React.FC<SearchBarProps> = ({route}) => {
   const [text, setText] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
-
-  const listItems = useMemo(() => {
-    return list.filter(item =>
-      item.name.toLowerCase().includes(text.toLowerCase()),
-    );
-  }, [list, text]);
+  const originalList = useMemo(() => route.params.list, [route.params.list]);
+  const [list, setList] = useState(route.params.list);
 
   const handleItemPress = (selectedItem: {name: string}) => {
-    console.log('WTFFF');
     setText('');
-    setIsFocused(false);
   };
 
-  const testing = () => {
-    console.log('WTFFFF');
-    setIsFocused(false);
+  const handleOnChange = (text: string) => {
+    setText(text);
+
+    if (text === '') {
+      setList(originalList);
+    } else {
+      const filteredList = originalList.filter(item =>
+        item.name.toLowerCase().includes(text.toLowerCase()),
+      );
+      setList(filteredList);
+    }
   };
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      activeOpacity={1}
-      onPressOut={() => {
-        if (isFocused) {
-          testing();
-        }
-      }}>
+    <ScrollView style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Search Category..."
-        onChangeText={text => setText(text)}
+        onChangeText={text => handleOnChange(text)}
         value={text}
-        onFocus={() => setIsFocused(true)}
       />
-      {isFocused && listItems.length > 0 && (
-        <View style={[styles.dropdown, {zIndex: 1}]}>
-          {listItems.map((listItem, index) => (
-            <TouchableWithoutFeedback
-              onPress={() => handleItemPress(listItem)}
-              key={listItem.name + index}>
-              <View style={styles.dropdownItemContainer}>
-                <FontAwesomeIcon name="search" />
-                <Text style={styles.dropdownItem}>{listItem.name}</Text>
+      <View style={[styles.dropdown, {zIndex: 1}]}>
+        {list.map((listItem: any, index: number) => (
+          <TouchableWithoutFeedback
+            onPress={() => handleItemPress(listItem)}
+            key={listItem.name + index}>
+            <View style={styles.dropdownItemContainer}>
+              <View style={styles.dropdownItemLeft}>
+                <FontAwesomeIcon name="search" style={iconStyles.default} />
+                <Text style={styles.dropdownItemText}>{listItem.name}</Text>
               </View>
-            </TouchableWithoutFeedback>
-          ))}
-        </View>
-      )}
-    </TouchableOpacity>
+              <FeatherIcon name="arrow-up-left" style={iconStyles.default} />
+            </View>
+          </TouchableWithoutFeedback>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
     flex: 1,
-    zIndex: 100,
-    margin: 19,
   },
   input: {
     padding: 5,
@@ -81,23 +72,30 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#CCC',
     borderRadius: 20,
+    margin: 10,
   },
   dropdown: {
     borderRadius: 10,
-    borderWidth: 2,
+    borderTopWidth: 2,
     borderColor: '#CCC',
     padding: 10,
-    position: 'absolute',
     backgroundColor: 'white',
-    top: '100%',
-    width: `100%`,
     marginTop: 5,
   },
   dropdownItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    justifyContent: 'space-between',
   },
-  dropdownItem: {
+  dropdownItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dropdownItemText: {
     padding: 10,
+    fontSize: 20,
   },
 });
