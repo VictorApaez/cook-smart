@@ -35,4 +35,8 @@ export const iconStyles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
+  default: {
+    fontSize: 20,
+    color: 'grey',
+  },
 });
