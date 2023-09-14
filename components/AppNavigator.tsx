@@ -7,10 +7,30 @@ import {CreateRecipePage} from '../pages/CreateEditRecipe/CreateRecipeScreen';
 import {WelcomeScreen} from '../pages/Welcome/WelcomeScreen';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
 import {View} from 'react-native';
-import {recipes} from '../data/CategoriesData';
+import {Recipe, recipes} from '../data/CategoriesData';
+import {SearchBar} from './SearchBar';
+import {RouteProp} from '@react-navigation/native';
 
-const RootStack = createNativeStackNavigator(); // Create a Root Stack
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Categories: undefined;
+  Recipes: undefined;
+  RecipeDetail: undefined;
+  CreateRecipe: undefined;
+  SearchBar: {list: {name: string}[]};
+  FavoriteRecipes: {
+    recipes: Recipe[];
+    categoryType: string;
+  };
+};
+
+type SearchBarRouteProp = RouteProp<RootStackParamList, 'SearchBar'>;
+
+export type SearchBarProps = {
+  route: SearchBarRouteProp;
+};
+
+const RootStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function HomeNavigator() {
@@ -25,6 +45,7 @@ function HomeNavigator() {
       <Stack.Screen name="Recipes" component={RecipesPage} />
       <Stack.Screen name="RecipeDetail" component={RecipePage} />
       <Stack.Screen name="CreateRecipe" component={CreateRecipePage} />
+      <Stack.Screen name="SearchBar" component={SearchBar} />
     </Stack.Navigator>
   );
 }
@@ -39,8 +60,9 @@ function CreateRecipeNavigator() {
 
 function FavoritesNavigator() {
   const favoriteRecipes = recipes.filter(recipe => {
-    return recipe.tags.find(tag => tag === 'Favorite');
+    return recipe.tags.includes('Favorite');
   });
+  console.log(favoriteRecipes);
   return (
     <Stack.Navigator>
       <Stack.Screen
