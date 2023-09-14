@@ -29,7 +29,7 @@ export const recipes = [
     image: require('../images/pank.jpeg'),
     ingredients: ['Eggs', 'Pasta', 'Bacon'],
     instructions: 'Cooking instructions here...',
-    tags: ['Italian', 'Dinner', 'Easy', 'Pork'],
+    tags: ['Italian', 'Dinner', 'Easy', 'Pork', 'Favorite'],
   },
   {
     id: 2,
