@@ -8,7 +8,7 @@ import {WelcomeScreen} from '../pages/Welcome/WelcomeScreen';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome.js';
 import {View} from 'react-native';
 import {Recipe, recipes} from '../data/CategoriesData';
-import {SearchBar} from './SearchBar';
+import {SearchBar} from '../pages/SearchBar/SearchBar';
 import {RouteProp} from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -16,7 +16,7 @@ type RootStackParamList = {
   Recipes: undefined;
   RecipeDetail: undefined;
   CreateRecipe: undefined;
-  SearchBar: {list: {name: string}[]};
+  SearchBar: {list: {name: string; recipes: {name: string}[]}[]};
   FavoriteRecipes: {
     recipes: Recipe[];
     categoryType: string;
