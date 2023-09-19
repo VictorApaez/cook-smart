@@ -14,13 +14,15 @@ import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {CreateCategoryModal} from './CreateCategoryModal';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {iconStyles} from '../../styles/commonStyles';
-import {SearchBar} from '../../components/SearchBar';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const CategoriesScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useAppDispatch();
   const categoriesStatus = useAppSelector(state => state.categories.status);
   const categoriesState = useAppSelector(state => state.categories);
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
     if (categoriesStatus === 'idle') {
@@ -53,19 +55,29 @@ const CategoriesScreen: React.FC = () => {
     </View>
   );
 
-  const subCategories = categoriesState.categories.flatMap(
-    category => category.subCategory,
-  );
+  const handleSearch = () => {
+    const subCategories: {name: string; image: any}[] =
+      categoriesState.categories.flatMap(c => c.subCategory);
+
+    navigation.navigate('SearchBar', {
+      list: subCategories,
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Categories</Text>
+        <FontAwesomeIcon
+          onPress={handleSearch}
+          name="search"
+          style={iconStyles.edit}
+        />
+
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <FontAwesomeIcon name="edit" style={iconStyles.edit} />
         </TouchableOpacity>
       </View>
-      <SearchBar list={subCategories} />
       <CreateCategoryModal
         modalVisible={modalVisible}
         onClose={() => setModalVisible(false)}
