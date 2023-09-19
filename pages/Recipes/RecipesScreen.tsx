@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {Text, ScrollView, StyleSheet} from 'react-native';
 import {Recipe} from '../../data/CategoriesData';
 import RecipesItem from './RecipesItem';
-import {SearchBar} from '../../components/SearchBar';
 
 interface RecipesPageProps {
   route?: any;
@@ -25,7 +24,6 @@ const RecipesPage: React.FC<RecipesPageProps> = ({
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.categoryType}>{categoryType}</Text>
-      <SearchBar list={recipes} />
       {recipes.map((recipe: Recipe, key: number) => (
         <RecipesItem recipe={recipe} id={key} />
       ))}
