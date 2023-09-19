@@ -21,7 +21,7 @@ const categoriesSlice = createSlice({
     },
     removeCategory: (state, action) => {
       state.categories = state.categories.filter(
-        category => category.title !== action.payload,
+        category => category.name !== action.payload,
       );
     },
   },
