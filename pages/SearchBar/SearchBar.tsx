@@ -1,30 +1,23 @@
-import React, {useState, useMemo} from 'react';
+import {DropDownItems} from './DropDownItems';
+import React, {useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {SearchBarProps} from '../../components/AppNavigator';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {iconStyles} from '../../styles/commonStyles';
-import {SearchBarProps} from '../../components/AppNavigator';
-import {useTypedNavigation} from '../../hooks/useTypedNavigation';
-import {Recipe} from '../../data/CategoriesData';
 
 export const SearchBar: React.FC<SearchBarProps> = ({route}) => {
   const originalList = route.params.list;
 
   const [text, setText] = useState('');
   const [list, setList] = useState(originalList);
-  const navigation = useTypedNavigation();
 
-  const handleItemPress = (selectedItem: any, type: string) => {
-    if (type === 'recipe') {
-      navigation.navigate('RecipeDetail', {recipe: selectedItem});
-    }
+  const cleatInput = () => {
     setText('');
   };
 
@@ -39,7 +32,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({route}) => {
           const filteredRecipes = category.recipes.filter(recipe =>
             recipe.name.toLowerCase().includes(text.toLowerCase()),
           );
-
+          if (category.name.toLowerCase().includes(text.toLowerCase()))
+            return category;
           return {
             ...category,
             recipes: filteredRecipes,
@@ -57,45 +51,24 @@ export const SearchBar: React.FC<SearchBarProps> = ({route}) => {
 
   return (
     <ScrollView style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search Category..."
-        onChangeText={text => handleOnChange(text)}
-        value={text}
-      />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.iconContainer}>
+          <FeatherIcon name="arrow-left" style={[iconStyles.default]} />
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Search Category..."
+          onChangeText={text => handleOnChange(text)}
+          value={text}
+        />
+      </View>
       <View style={[styles.dropdown, {zIndex: 1}]}>
         {list.map((listItem: any, index: number) => (
-          <TouchableWithoutFeedback
-            onPress={() => handleItemPress(listItem, 'category')}
-            key={listItem.name + index}>
-            <View style={styles.dropdownItemContainer}>
-              <View style={styles.dropdownItemCategory}>
-                <View style={styles.dropdownCategoryLeft}>
-                  <FontAwesomeIcon name="search" style={iconStyles.default} />
-                  <Text style={styles.dropdownItemText}>{listItem.name}</Text>
-                </View>
-                <FeatherIcon name="arrow-up-left" style={iconStyles.default} />
-              </View>
-              {listItem.recipes && (
-                <View style={styles.dropDownItemRecipes}>
-                  {listItem.recipes.map((recipe: Recipe) => (
-                    <TouchableWithoutFeedback
-                      onPress={() => handleItemPress(recipe, 'recipe')}>
-                      <View style={styles.dropDownItemRecipeContainer}>
-                        <Text style={styles.dropDownItemRecipe}>
-                          {recipe.name}
-                        </Text>
-                        <FeatherIcon
-                          name="arrow-up-left"
-                          style={iconStyles.default}
-                        />
-                      </View>
-                    </TouchableWithoutFeedback>
-                  ))}
-                </View>
-              )}
-            </View>
-          </TouchableWithoutFeedback>
+          <DropDownItems
+            listItem={listItem}
+            clearInput={cleatInput}
+            key={index}
+          />
         ))}
       </View>
     </ScrollView>
@@ -106,6 +79,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  iconContainer: {marginLeft: 15},
   input: {
     padding: 5,
     paddingLeft: 20,
@@ -113,6 +92,7 @@ const styles = StyleSheet.create({
     borderColor: '#CCC',
     borderRadius: 20,
     margin: 10,
+    width: '80%',
   },
   dropdown: {
     borderRadius: 10,
@@ -121,34 +101,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     marginTop: 5,
-  },
-  dropdownItemContainer: {
-    flexDirection: 'column',
-  },
-  dropdownItemCategory: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  dropdownCategoryLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dropdownItemText: {
-    padding: 10,
-    fontSize: 20,
-  },
-  dropDownItemRecipes: {
-    flexDirection: 'column',
-    marginLeft: 40,
-  },
-  dropDownItemRecipeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  dropDownItemRecipe: {
-    padding: 10,
-    fontSize: 15,
+    paddingLeft: 15,
   },
 });
