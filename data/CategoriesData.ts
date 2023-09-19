@@ -213,6 +213,15 @@ export const recipeTags = Array.from(
   new Set(recipes.flatMap(recipe => recipe.tags)),
 );
 
+export const combinedData = categories
+  .flatMap(category => category.subCategory)
+  .map(subCategory => {
+    return {
+      ...subCategory,
+      recipes: recipes.filter(recipe => recipe.tags.includes(subCategory.name)),
+    };
+  });
+
 export const createRecipe = (newRecipe: Omit<Recipe, 'id'>): Recipe => {
   const recipeWithId = {
     ...newRecipe,
