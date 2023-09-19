@@ -10,7 +10,7 @@ type ItemProps = {
   clearInput: () => void;
 };
 
-export const DropDownItem: React.FC<ItemProps> = ({listItem, clearInput}) => {
+export const DropDownItems: React.FC<ItemProps> = ({listItem, clearInput}) => {
   const navigation = useTypedNavigation();
 
   const handleItemPress = (selectedItem: any, type: string) => {
@@ -21,37 +21,43 @@ export const DropDownItem: React.FC<ItemProps> = ({listItem, clearInput}) => {
   };
 
   return (
-    <View style={styles.dropdownItemContainer}>
-      <View style={styles.dropdownItemCategory}>
-        <View style={styles.dropdownCategoryLeft}>
-          <FontAwesomeIcon name="search" style={iconStyles.default} />
-          <Text style={styles.dropdownItemCategoryText}>{listItem.name}</Text>
+    <TouchableWithoutFeedback
+      onPress={() => handleItemPress(listItem, 'category')}>
+      <View style={styles.dropdownItemContainer}>
+        <View style={styles.dropdownItemCategory}>
+          <View style={styles.dropdownCategoryLeft}>
+            <FontAwesomeIcon name="search" style={iconStyles.default} />
+            <Text style={styles.dropdownItemCategoryText}>{listItem.name}</Text>
+          </View>
+          <FeatherIcon name="arrow-up-left" style={iconStyles.default} />
         </View>
-        <FeatherIcon name="arrow-up-left" style={iconStyles.default} />
-      </View>
 
-      {listItem.recipes && (
-        <View style={styles.dropDownItemRecipes}>
-          {listItem.recipes.map((recipe: Recipe) => (
-            <TouchableWithoutFeedback
-              onPress={() => handleItemPress(recipe, 'recipe')}>
-              <View style={styles.dropDownItemRecipeContainer}>
-                <View style={styles.dropDownItemRecipeLeft}>
+        {listItem.recipes && (
+          <View style={styles.dropDownItemRecipes}>
+            {listItem.recipes.map((recipe: Recipe) => (
+              <TouchableWithoutFeedback
+                onPress={() => handleItemPress(recipe, 'recipe')}>
+                <View style={styles.dropDownItemRecipeContainer}>
+                  <View style={styles.dropDownItemRecipeLeft}>
+                    <FeatherIcon
+                      name="corner-down-right"
+                      style={iconStyles.default}
+                    />
+                    <Text style={styles.dropDownItemRecipeName}>
+                      {recipe.name}
+                    </Text>
+                  </View>
                   <FeatherIcon
-                    name="corner-down-right"
+                    name="arrow-up-left"
                     style={iconStyles.default}
                   />
-                  <Text style={styles.dropDownItemRecipeName}>
-                    {recipe.name}
-                  </Text>
                 </View>
-                <FeatherIcon name="arrow-up-left" style={iconStyles.default} />
-              </View>
-            </TouchableWithoutFeedback>
-          ))}
-        </View>
-      )}
-    </View>
+              </TouchableWithoutFeedback>
+            ))}
+          </View>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
