@@ -16,6 +16,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {iconStyles} from '../../styles/commonStyles';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {combinedData} from '../../data/CategoriesData';
 
 const CategoriesScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,11 +57,8 @@ const CategoriesScreen: React.FC = () => {
   );
 
   const handleSearch = () => {
-    const subCategories: {name: string; image: any}[] =
-      categoriesState.categories.flatMap(c => c.subCategory);
-
     navigation.navigate('SearchBar', {
-      list: subCategories,
+      list: combinedData,
     });
   };
 
